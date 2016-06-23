@@ -1,0 +1,13 @@
+#!/bin/bash
+
+[[ $# -ne 3 ]] && exit 1
+
+if [ $1 == "prod" ]
+then
+  ./aws-prod ec2 describe-instances > /tmp/.aws.json
+elif [ $1 == "test" ]
+then
+  ./aws-test ec2 describe-instances > /tmp/.aws.json
+fi
+
+./aws-discovery $2 $3

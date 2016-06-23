@@ -1,0 +1,48 @@
+#!/usr/bin/env python
+
+import json
+import sys
+
+with open('/tmp/.aws.json') as data_file:
+    data = json.load(data_file)
+
+machines = data['Reservations'].__len__() - 1
+
+if sys.argv[1] == "-id":
+
+	id = sys.argv[2]
+
+	for machine in range(0, machines):
+	    aws_id = data['Reservations'][machine]['Instances'][0]['InstanceId'].__str__()
+	    if aws_id == id:
+	        break
+
+	tag_size = data['Reservations'][machine]['Instances'][0]['Tags'].__len__() - 1
+	for tag in range(0, tag_size):
+	    if data['Reservations'][machine]['Instances'][0]['Tags'][tag]['Key'] == "Name":
+	        print data['Reservations'][machine]['Instances'][0]['Tags'][tag]['Value']
+
+	print data['Reservations'][machine]['Instances'][0]['PrivateIpAddress']
+
+elif sys.argv[1] == "-ip":
+
+	ip = sys.argv[2]
+
+	for machine in range(0, machines):
+		try:
+			aws_ip = data['Reservations'][machine]['Instances'][0]['PrivateIpAddress']
+			if aws_ip == ip:
+				break
+		except:
+			continue
+
+	tag_size = data['Reservations'][machine]['Instances'][0]['Tags'].__len__() - 1
+	for tag in range(0, tag_size):
+	    if data['Reservations'][machine]['Instances'][0]['Tags'][tag]['Key'] == "Name":
+	        print data['Reservations'][machine]['Instances'][0]['Tags'][tag]['Value']
+
+else:
+	print "Wrong Parameters"
+
+
+
