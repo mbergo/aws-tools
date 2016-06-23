@@ -21,9 +21,9 @@ if sys.argv[1] == "-id":
 	tag_size = data['Reservations'][machine]['Instances'][0]['Tags'].__len__() - 1
 	for tag in range(0, tag_size):
 	    if data['Reservations'][machine]['Instances'][0]['Tags'][tag]['Key'] == "Name":
-	        print data['Reservations'][machine]['Instances'][0]['Tags'][tag]['Value']
+	        r_name = data['Reservations'][machine]['Instances'][0]['Tags'][tag]['Value']
 
-	print data['Reservations'][machine]['Instances'][0]['PrivateIpAddress']
+	print "%s  =>:  %s" % (r_name, data['Reservations'][machine]['Instances'][0]['PrivateIpAddress'])
 
 elif sys.argv[1] == "-ip":
 
@@ -55,7 +55,7 @@ elif sys.argv[1] == "-name":
 		        		priv_ip = data['Reservations'][machine]['Instances'][0]['PrivateIpAddress']
 		        	except:
 		        		priv_ip = "None"
-		        	print "%s  :  %s" % (data['Reservations'][machine]['Instances'][0]['Tags'][tag]['Value'], priv_ip)
+		        	print "%s  =>:  %s" % (data['Reservations'][machine]['Instances'][0]['Tags'][tag]['Value'], priv_ip)
 
 else:
 	print "Wrong Parameters"

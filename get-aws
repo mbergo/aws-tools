@@ -4,10 +4,10 @@
 
 if [ $1 == "prod" ]
 then
-  ./aws-prod ec2 describe-instances > /tmp/.aws.json
+  aws-prod ec2 describe-instances > /tmp/.aws.json
 elif [ $1 == "test" ]
 then
-  ./aws-test ec2 describe-instances > /tmp/.aws.json
+  aws-test ec2 describe-instances > /tmp/.aws.json
 fi
 
-./aws-discovery $2 $3
+aws-discovery $2 $3 | column -t -s:
