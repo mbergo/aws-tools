@@ -2,6 +2,7 @@
 
 import json
 import sys
+import re
 
 with open('/tmp/.aws.json') as data_file:
     data = json.load(data_file)
@@ -40,6 +41,21 @@ elif sys.argv[1] == "-ip":
 	for tag in range(0, tag_size):
 	    if data['Reservations'][machine]['Instances'][0]['Tags'][tag]['Key'] == "Name":
 	        print data['Reservations'][machine]['Instances'][0]['Tags'][tag]['Value']
+
+elif sys.argv[1] == "-name":
+
+	name = sys.argv[2]
+
+	for machine in range(0, machines):
+		tag_size = data['Reservations'][machine]['Instances'][0]['Tags'].__len__() - 1
+		for tag in range(0, tag_size):
+		    if data['Reservations'][machine]['Instances'][0]['Tags'][tag]['Key'] == "Name":
+		        if re.search(name, data['Reservations'][machine]['Instances'][0]['Tags'][tag]['Value']):
+		        	try:
+		        		priv_ip = data['Reservations'][machine]['Instances'][0]['PrivateIpAddress']
+		        	except:
+		        		priv_ip = "None"
+		        	print "%s %s" % (data['Reservations'][machine]['Instances'][0]['Tags'][tag]['Value'], priv_ip)
 
 else:
 	print "Wrong Parameters"
