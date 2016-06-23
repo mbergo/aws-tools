@@ -55,7 +55,7 @@ elif sys.argv[1] == "-name":
 		        		priv_ip = data['Reservations'][machine]['Instances'][0]['PrivateIpAddress']
 		        	except:
 		        		priv_ip = "None"
-		        	print "%s %s" % (data['Reservations'][machine]['Instances'][0]['Tags'][tag]['Value'], priv_ip)
+		        	print "%s  :  %s" % (data['Reservations'][machine]['Instances'][0]['Tags'][tag]['Value'], priv_ip)
 
 else:
 	print "Wrong Parameters"
